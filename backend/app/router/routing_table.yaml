@@ -1,0 +1,52 @@
+# Declarative task -> model routing. Add a new open-weight model by adding
+# an entry here + a backend adapter; no router code changes needed.
+
+models:
+  llama3.1:
+    backend: ollama
+    base_url: http://localhost:11434
+    # For multi-GPU HA, replace base_url with a list of endpoints — one per
+    # GPU-pinned Ollama replica (see docs/DEPLOYMENT.md "GPU scheduling"):
+    # endpoints:
+    #   - http://model-runtime-gpu0:11434
+    #   - http://model-runtime-gpu1:11434
+    modality: text
+    good_for: [summarization, general_reasoning, document_drafting, approval_notes]
+
+  deepseek-coder:
+    backend: ollama
+    base_url: http://localhost:11434
+    ollama_model: deepseek-coder:latest
+    modality: code
+    good_for: [coding, debugging, spreadsheet_formulas]
+
+  qwen2.5-vl:
+    backend: ollama
+    base_url: http://localhost:11434
+    modality: vision
+    good_for: [engineering_drawings, ocr_fallback, image_understanding]
+
+  mistral:
+    backend: ollama
+    base_url: http://localhost:11434
+    modality: text
+    good_for: [fast_general_reasoning]
+
+  gemma:
+    backend: ollama
+    base_url: http://localhost:11434
+    modality: text
+    good_for: [lightweight_tasks]
+
+task_routing:
+  coding: deepseek-coder
+  debugging: deepseek-coder
+  vision: qwen2.5-vl
+  engineering_drawing: qwen2.5-vl
+  ocr_fallback: qwen2.5-vl
+  summarization: llama3.1
+  document_drafting: llama3.1
+  approval_note: llama3.1
+  reasoning: llama3.1        # swap to a stronger reasoning model as it's added
+  fast_lookup: mistral
+  lightweight: gemma

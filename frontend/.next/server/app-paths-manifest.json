@@ -1,0 +1,9 @@
+{
+  "/audit/page": "app/audit/page.js",
+  "/knowledge/page": "app/knowledge/page.js",
+  "/vision/page": "app/vision/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/coding/page": "app/coding/page.js",
+  "/login/page": "app/login/page.js",
+  "/ocr/page": "app/ocr/page.js"
+}
